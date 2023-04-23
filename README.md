@@ -11,7 +11,7 @@ This project is a natural evolution of [DogeBeGone](https://github.com/SableRaf/
 
 To install BlueBeGone locally, follow these steps:
 
-1. Download the release zip and extract the BlueBeGone folder (or just clone the repo / download the zip, in which case you may want to remove the .git folder since you don't need it).
+1. Download the repo as zip and extract it, or just clone it. You may want to remove the .git folder since it's unnecessary.
 2. Open the Chrome browser and navigate to `chrome://extensions`.
 3. Enable "Developer mode" by clicking the toggle switch in the top right corner.
 4. Click "Load unpacked" and select the folder containing the BlueBeGone Chrome extension files.
