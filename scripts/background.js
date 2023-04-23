@@ -15,7 +15,7 @@ function updateIcon(isEnabled) {
   }
   
 chrome.runtime.onInstalled.addListener(() => {
-    chrome.storage.sync.set({ isEnabled: false }, () => {
-        updateIcon(false);
+    chrome.storage.sync.set({ isEnabled: true }, () => {
+        updateIcon(true);
     });
 });
