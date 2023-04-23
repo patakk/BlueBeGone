@@ -1,7 +1,7 @@
 
 # BlueBeGone
 Drastic times call for drastic measures. This Chrome extensions removes the very useful "Twitter Blue" and "Verified Organizations" sidebar links.
-This project is a natural evolution of [DogeBeGone](https://github.com/SableRaf/dogeBeGone_extension), originally by [Raphaël](https://twitter.com/sableRaph). Much of the project structure, code and README are based on that project, with modifications like adding a toggle button for simpler use, gray icons and of course the main target (links instead of the doge icon).
+This project is a natural evolution of [DogeBeGone](https://github.com/SableRaf/dogeBeGone_extension), originally by [Raphaël](https://twitter.com/sableRaph). The main idea is the same, make twitter just a bit less annoying. I've also added a simple toggle button in the extensions pop-up to simplify the process of enabling/disabling the extension.
 
 ![BlueBeGone Header](./assets/demo.png)
 
@@ -14,8 +14,6 @@ To install BlueBeGone locally, follow these steps:
 2. Open the Chrome browser and navigate to `chrome://extensions`.
 3. Enable "Developer mode" by clicking the toggle switch in the top right corner.
 4. Click "Load unpacked" and select the folder containing the BlueBeGone Chrome extension files.
-
-Now, you can enjoy Twitter without being distracted by a dead meme from 2013.
 
 ## Contributing
 
