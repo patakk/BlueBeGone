@@ -46,20 +46,3 @@ chrome.storage.sync.get(["isEnabled"], (result) => {
   updateIcon(result.isEnabled);
   updateToggle(result.isEnabled);
 });
-
-
-├── README.md
-├── assets
-│   ├── demo.png
-│   ├── icon128.png
-│   ├── icon16.png
-│   ├── icon48.png
-│   ├── icon_gray128.png
-│   ├── icon_gray16.png
-│   └── icon_gray48.png
-├── manifest.json
-├── popup.html
-└── scripts
-    ├── background.js
-    ├── content.js
-    └── popup.js
