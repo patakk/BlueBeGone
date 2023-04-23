@@ -25,7 +25,9 @@ function applyToggleState(isEnabled) {
 }
 
 chrome.storage.sync.get(["isEnabled"], (result) => {
-  applyToggleState(result.isEnabled);
+  observeDOMChanges(() => {
+    applyToggleState(result.isEnabled);
+  });
 });
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -33,3 +35,15 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     applyToggleState(request.isEnabled);
   }
 });
+
+function observeDOMChanges(callback) {
+  const observer = new MutationObserver((mutationsList, observer) => {
+    for (const mutation of mutationsList) {
+      if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
+        callback();
+      }
+    }
+  });
+
+  observer.observe(document.body, { childList: true, subtree: true });
+}
