@@ -16,6 +16,8 @@ To install BlueBeGone locally, follow these steps:
 3. Enable "Developer mode" by clicking the toggle switch in the top right corner.
 4. Click "Load unpacked" and select the folder containing the BlueBeGone Chrome extension files.
 
+By default, the extension is enabled. To disable it, click the extension icon in the top right corner of the browser and click the toggle button.
+
 ## Contributing
 
 Feel free to contribute to this project in any way you see fit. Submit a PR, open an issue, or message me on [Twitter](https://twitter.com/patakk).
