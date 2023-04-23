@@ -1,16 +1,14 @@
-// popuScript.js
-
 function updateIcon(isEnabled) {
   const path = isEnabled
     ? {
-        "16": "assets/icon16.png",
-        "48": "assets/icon48.png",
-        "128": "assets/icon128.png",
+        "16": "../assets/icon16.png",
+        "48": "../assets/icon48.png",
+        "128": "../assets/icon128.png",
       }
     : {
-        "16": "assets/icon_gray16.png",
-        "48": "assets/icon_gray48.png",
-        "128": "assets/icon_gray128.png",
+        "16": "../assets/icon_gray16.png",
+        "48": "../assets/icon_gray48.png",
+        "128": "../assets/icon_gray128.png",
       };
 
   chrome.action.setIcon({ path: path });
@@ -48,3 +46,20 @@ chrome.storage.sync.get(["isEnabled"], (result) => {
   updateIcon(result.isEnabled);
   updateToggle(result.isEnabled);
 });
+
+
+├── README.md
+├── assets
+│   ├── demo.png
+│   ├── icon128.png
+│   ├── icon16.png
+│   ├── icon48.png
+│   ├── icon_gray128.png
+│   ├── icon_gray16.png
+│   └── icon_gray48.png
+├── manifest.json
+├── popup.html
+└── scripts
+    ├── background.js
+    ├── content.js
+    └── popup.js
