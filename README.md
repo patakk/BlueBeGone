@@ -2,7 +2,7 @@
 # BlueBeGone
 Drastic times call for drastic measures. BlueBeGone Chrome extension removes the very useful "Twitter Blue" and "Verified Organizations" sidebar links.
 
-This project is a natural evolution of [DogeBeGone](https://github.com/SableRaf/dogeBeGone_extension), originally by [Raphaël](https://twitter.com/sableRaph). The main idea is the same, make twitter just a bit less annoying. I've also added a simple toggle button in the extensions pop-up to simplify the process of enabling/disabling the extension.
+This project is a natural evolution of [DogeBeGone](https://github.com/SableRaf/dogeBeGone_extension), originally by [Raphaël](https://twitter.com/sableRaph). The main idea is the same, make twitter just a bit less annoying. I've also added a simple toggle button in the extension pop-up to simplify the process of enabling/disabling it.
 
 ![BlueBeGone Header](./assets/demo.png)
 
