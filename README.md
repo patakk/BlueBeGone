@@ -1,9 +1,10 @@
-![BlueBeGone Header](./header.png)
 
 # BlueBeGone
-
 Drastic times call for drastic measures. This Chrome extensions removes the very useful "Twitter Blue" and "Verified Org..." sidebar links.
 This project is a natural evolution of [DogeBeGone](https://github.com/SableRaf/dogeBeGone_extension). Much of the project structure, code and README are based on that project, with modifications like adding a toggle button for simpler use, gray icons and of course the main target (links instead of the doge icon).
+
+![BlueBeGone Header](./header.png)
+
 
 ## Installation
 
