@@ -7,14 +7,30 @@
         font-size: 16px;
         text-align: center;
         width: 300px;
+        color: #c8c8c8;
+        background-color: #222222;
+      }
+      #main {
+        padding-bottom: 15px;
+      }
+      #toggle {
+        display: inline-block;
+        width: 100px;
+        height: 40px;
+        line-height: 40px;
+        background-color: #b34c4c;
+        color: #c8c8c8;
+        text-align: center;
+        cursor: pointer;
       }
     </style>
   </head>
   <body>
-    <h2>BlueBeGone</h2>
-    <p>This extension hides the useless "Twitter Blue" and "Verified Org..." sidebar links.</p>
-    <button id ="toggle"> On/Off </button>
-    <script src="popupScript.js"></script>
+    <div id="main">
+        <h2>BlueBeGone</h2>
+        <p>This extension hides the Twitter Blue and Verified Organizations sidebar links.</p>
+        <div id ="toggle"> OFF </div>
+        <script src="popupScript.js"></script>
+    </div>
   </body>
 </html>
-

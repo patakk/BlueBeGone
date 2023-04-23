@@ -1,5 +1,3 @@
-// contentScript.js
-
 function hideSpecifiedElement() {
   const targetSelector = 'a[href="/i/twitter_blue_sign_up"][role="link"], a[href="/i/verified-orgs-signup"][role="link"]';
   const twitterElements = document.querySelectorAll(targetSelector);
@@ -18,21 +16,20 @@ function showSpecifiedElement() {
   }
 }
 
-chrome.storage.sync.get(["isEnabled"], (result) => {
-  if (result.isEnabled) {
+function applyToggleState(isEnabled) {
+  if (isEnabled) {
     hideSpecifiedElement();
   } else {
     showSpecifiedElement();
   }
+}
+
+chrome.storage.sync.get(["isEnabled"], (result) => {
+  applyToggleState(result.isEnabled);
 });
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.toggle) {
-    if (request.isEnabled) {
-      hideSpecifiedElement();
-    } else {
-      showSpecifiedElement();
-    }
+    applyToggleState(request.isEnabled);
   }
 });
-
