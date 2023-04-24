@@ -29,8 +29,8 @@ function observeDOMChanges() {
       for (const mutation of mutationsList) {
         if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
           chrome.storage.sync.get(["isEnabled"], (result) => {
-            if(result !== undefined){
-                applyToggleState(result);
+            if(result.isEnabled !== undefined){
+                applyToggleState(result.isEnabled);
             }
             else{
                 applyToggleState(true);
@@ -51,8 +51,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 window.onload = observeDOMChanges;
 
 chrome.storage.sync.get(["isEnabled"], (result) => {
-    if(result !== undefined){
-        applyToggleState(result);
+    if(result.isEnabled !== undefined){
+        applyToggleState(result.isEnabled);
     }
     else{
         applyToggleState(true);
