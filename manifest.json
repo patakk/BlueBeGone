@@ -5,30 +5,30 @@
     "description": "Hides the useless \"Twitter Blue\" and \"Verified Organizations\" sidebar links.",
     "permissions": ["tabs", "scripting", "storage"],
     "action": {
-      "default_popup": "popup.html",
-      "default_icon": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "assets/icon16.png",
+            "48": "assets/icon48.png",
+            "128": "assets/icon128.png"
+        }
+    },
+    "icons": {
         "16": "assets/icon16.png",
         "48": "assets/icon48.png",
         "128": "assets/icon128.png"
-      }
-    },
-    "icons": {
-      "16": "assets/icon16.png",
-      "48": "assets/icon48.png",
-      "128": "assets/icon128.png"
     },
     "content_scripts": [
-      {
-        "matches": [
-          "https://twitter.com/*"
-        ],
-        "js": [
-          "scripts/content.js"
-        ],
-        "run_at": "document_end"
-      }
+        {
+            "matches": [
+                "https://twitter.com/*"
+            ],
+            "js": [
+                "scripts/content.js"
+            ],
+            "run_at": "document_end"
+        }
     ],
     "background": {
-      "service_worker": "scripts/background.js"
+        "service_worker": "scripts/background.js"
     }
-  }
+}
