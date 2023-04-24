@@ -27,8 +27,5 @@
             ],
             "run_at": "document_end"
         }
-    ],
-    "background": {
-        "service_worker": "scripts/background.js"
-    }
+    ]
 }
