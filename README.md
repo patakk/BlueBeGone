@@ -5,11 +5,13 @@ Drastic times call for drastic measures. BlueBeGone Chrome extension gives you t
 This project is a natural evolution of [DogeBeGone](https://github.com/SableRaf/dogeBeGone_extension), originally by [Raphaël](https://twitter.com/sableRaph). The main idea is the same, make twitter just a bit less annoying.
 
 <div align="center">
-  <img src="./assets/popup.png" alt="BlueBeGone Popup" style="width: 300px;">
+  <img src="./assets/popup.png" alt="BlueBeGone Popup" style="width: 30%;">
 </div>
 
+
+
 <div align="center">
-  <img src="./assets/demo.png" alt="BlueBeGone Header" style="width: 450px;">
+  <img src="./assets/demo.png" alt="BlueBeGone Header" style="width: 80%;">
 </div>
 
 
