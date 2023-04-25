@@ -35,6 +35,13 @@ async function toggle(key){
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     chrome.storage.sync.get(["isEnabled"], (result) => {
         result.isEnabled[keyidx] = !result.isEnabled[keyidx];
+        
+        let num = 0;
+        for(let k = 0; k < result.isEnabled.length; k++){
+            if(result.isEnabled[k]) num++;
+        }
+        updateIcon(num > 0);
+
         updateToggle(result.isEnabled);
         chrome.storage.sync.set({ isEnabled: result.isEnabled }, () => {
             chrome.tabs.sendMessage(tab.id, { isEnabled: result.isEnabled });
@@ -51,11 +58,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     chrome.storage.sync.get(["isEnabled"], (result) => {
         if(result.isEnabled !== undefined){
-            // updateIcon(result.isEnabled);
+            let num = 0;
+            for(let k = 0; k < result.isEnabled.length; k++){
+                if(result.isEnabled[k]) num++;
+            }
+            updateIcon(num > 0);
             updateToggle(result.isEnabled);
         }
         else{
-            // updateIcon(true);
+            updateIcon(true);
             const trues = new Array(targetSelectors.length).fill(true);
             updateToggle(trues);
             chrome.storage.sync.set({ isEnabled: trues });
