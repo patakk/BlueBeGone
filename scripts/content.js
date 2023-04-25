@@ -33,7 +33,7 @@ function observeDOMChanges(selectors) {
                         applyToggleState(result.isEnabled, selectors);
                     } else {
                         let flagBySelector = {};
-                        for(const key of targetSelectors) flagBySelector[key] = true;
+                        for(const key in targetSelectors) flagBySelector[key] = true;
                         applyToggleState(flagBySelector, selectors);
                     }
                 });
