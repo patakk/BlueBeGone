@@ -1,5 +1,5 @@
-function updateIcon(isEnabled) {
-    const path = isEnabled
+function updateIcon(flag) {
+    const path = flag
     ? {
         "16": "../assets/icon16.png",
         "48": "../assets/icon48.png",
@@ -15,10 +15,9 @@ function updateIcon(isEnabled) {
 }
 
 function updateToggle(isEnabled) {
-    for(let k = 0; k < targetSelectors.length; k++){
-        let key = targetSelectors[k];
+    for(let key in isEnabled){
         const toggle = document.getElementById(key);
-        if (isEnabled[k]) {
+        if (isEnabled[key]) {
             toggle.textContent = "hidden";
             toggle.style.backgroundColor = "#6cb36c";
             toggle.style.color = "#ffffff";
@@ -31,14 +30,13 @@ function updateToggle(isEnabled) {
 }
 
 async function toggle(key){
-    let keyidx = targetSelectors.indexOf(key);
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     chrome.storage.sync.get(["isEnabled"], (result) => {
-        result.isEnabled[keyidx] = !result.isEnabled[keyidx];
+        result.isEnabled[key] = !result.isEnabled[key];
         
         let num = 0;
-        for(let k = 0; k < result.isEnabled.length; k++){
-            if(result.isEnabled[k]) num++;
+        for(let key in result.isEnabled){
+            if(result.isEnabled[key]) num++;
         }
         updateIcon(num > 0);
 
@@ -59,17 +57,20 @@ document.addEventListener("DOMContentLoaded", () => {
     chrome.storage.sync.get(["isEnabled"], (result) => {
         if(result.isEnabled !== undefined){
             let num = 0;
-            for(let k = 0; k < result.isEnabled.length; k++){
-                if(result.isEnabled[k]) num++;
+            // iterate through isEnabled dict
+            for(let key of targetSelectors){
+                if(result.isEnabled[key]) num++;
             }
             updateIcon(num > 0);
             updateToggle(result.isEnabled);
         }
         else{
             updateIcon(true);
-            const trues = new Array(targetSelectors.length).fill(true);
-            updateToggle(trues);
-            chrome.storage.sync.set({ isEnabled: trues });
+            // dict for selectors
+            let flagBySelector = {};
+            for(const key of targetSelectors) flagBySelector[key] = true;
+            updateToggle(flagBySelector);
+            chrome.storage.sync.set({ isEnabled: flagBySelector });
         }
     });
 });

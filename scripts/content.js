@@ -15,10 +15,8 @@ function showSpecifiedElements(selector) {
 }
 
 function applyToggleState(isEnabled, selectors) {
-    for(let k = 0; k < Object.keys(selectors).length; k++){
-        let key = Object.keys(selectors)[k];
-        if (isEnabled[k]) {
-            console.log(k, key, isEnabled[k], selectors[key])
+    for(let key in selectors){
+        if (isEnabled[key]) {
             hideSpecifiedElements(selectors[key]);
         } else {
             showSpecifiedElements(selectors[key]);
@@ -34,7 +32,9 @@ function observeDOMChanges(selectors) {
                     if (result.isEnabled !== undefined) {
                         applyToggleState(result.isEnabled, selectors);
                     } else {
-                        applyToggleState(new Array(Object.keys(selectors).length).fill(true), selectors);
+                        let flagBySelector = {};
+                        for(const key of targetSelectors) flagBySelector[key] = true;
+                        applyToggleState(flagBySelector, selectors);
                     }
                 });
             }
@@ -62,7 +62,9 @@ chrome.storage.sync.get(["isEnabled"], (result) => {
     if (result.isEnabled !== undefined) {
         applyToggleState(result.isEnabled, targetSelectors);
     } else {
-        applyToggleState(new Array(Object.keys(targetSelectors).length).fill(true), targetSelectors);
+        let flagBySelector = {};
+        for(const key in targetSelectors) flagBySelector[key] = true;
+        applyToggleState(flagBySelector, targetSelectors);
     }
 });
 
