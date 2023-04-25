@@ -15,43 +15,50 @@ function updateIcon(isEnabled) {
 }
 
 function updateToggle(isEnabled) {
-    const toggle = document.getElementById("toggle");
-    if (isEnabled) {
-        toggle.textContent = "ON";
-        toggle.style.backgroundColor = "#4cb34c";
-        toggle.style.color = "#ffffff";
-    } else {
-        toggle.textContent = "OFF";
-        toggle.style.backgroundColor = "#b34c4c";
-        toggle.style.color = "#c8c8c8";
+    for(let k = 0; k < targetSelectors.length; k++){
+        let key = targetSelectors[k];
+        const toggle = document.getElementById(key);
+        if (isEnabled[k]) {
+            toggle.textContent = "hidden";
+            toggle.style.backgroundColor = "#6cb36c";
+            toggle.style.color = "#ffffff";
+        } else {
+            toggle.textContent = "shown";
+            toggle.style.backgroundColor = "#1d9bf0";
+            toggle.style.color = "#ffffff";
+        }
     }
 }
 
-async function toggle(){
+async function toggle(key){
+    let keyidx = targetSelectors.indexOf(key);
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    
     chrome.storage.sync.get(["isEnabled"], (result) => {
-        const isEnabled = !result.isEnabled;
-        chrome.storage.sync.set({ isEnabled: isEnabled }, () => {
-            updateIcon(isEnabled);
-            updateToggle(isEnabled);
-            chrome.tabs.sendMessage(tab.id, { isEnabled: isEnabled });
+        result.isEnabled[keyidx] = !result.isEnabled[keyidx];
+        updateToggle(result.isEnabled);
+        chrome.storage.sync.set({ isEnabled: result.isEnabled }, () => {
+            chrome.tabs.sendMessage(tab.id, { isEnabled: result.isEnabled });
         });
     });
 }
 
-document.getElementById("toggle").addEventListener("click", toggle);
+const targetSelectors = ['toggleSignup', 'toggleVerif', 'toggleCheck'];
     
 document.addEventListener("DOMContentLoaded", () => {
+    for(const key of targetSelectors){
+        document.getElementById(key).addEventListener("click", () => {toggle(key)});
+    }
+
     chrome.storage.sync.get(["isEnabled"], (result) => {
         if(result.isEnabled !== undefined){
-            updateIcon(result.isEnabled);
+            // updateIcon(result.isEnabled);
             updateToggle(result.isEnabled);
         }
         else{
-            updateIcon(true);
-            updateToggle(true);
-            chrome.storage.sync.set({ isEnabled: true });
+            // updateIcon(true);
+            const trues = new Array(targetSelectors.length).fill(true);
+            updateToggle(trues);
+            chrome.storage.sync.set({ isEnabled: trues });
         }
     });
 });
