@@ -66,7 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         else{
             updateIcon(true);
-            // dict for selectors
             let flagBySelector = {};
             for(const key of targetSelectors) flagBySelector[key] = true;
             updateToggle(flagBySelector);

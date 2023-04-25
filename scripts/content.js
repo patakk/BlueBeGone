@@ -44,7 +44,6 @@ function observeDOMChanges(selectors) {
     observer.observe(document.body, { childList: true, subtree: true });
 }
 
-// Add target selectors to this array
 const targetSelectors = {
     'toggleSignup': 'a[href="/i/twitter_blue_sign_up"][role="link"]', // Twitter Blue signup
     'toggleVerif': 'a[href="/i/verified-orgs-signup"][role="link"]', // Verified Orgs signup
