@@ -47,7 +47,12 @@ async function toggle(key){
     });
 }
 
-const targetSelectors = ['toggleSignup', 'toggleVerif', 'toggleCheck'];
+// the order of these selectors must match the order of the keys in targetSelectors dict from content.js
+const targetSelectors = [
+    'toggleSignup', 
+    'toggleVerif', 
+    'toggleCheck',
+];
     
 document.addEventListener("DOMContentLoaded", () => {
     for(const key of targetSelectors){

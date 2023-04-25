@@ -44,6 +44,7 @@ function observeDOMChanges(selectors) {
     observer.observe(document.body, { childList: true, subtree: true });
 }
 
+// the order of these keys must match the order of the keys in targetSelectors array from popup.js
 const targetSelectors = {
     'toggleSignup': 'a[href="/i/twitter_blue_sign_up"][role="link"]', // Twitter Blue signup
     'toggleVerif': 'a[href="/i/verified-orgs-signup"][role="link"]', // Verified Orgs signup
