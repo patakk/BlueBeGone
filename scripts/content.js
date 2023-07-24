@@ -46,9 +46,8 @@ function observeDOMChanges(selectors) {
 
 // the order of these keys must match the order of the keys in targetSelectors array from popup.js
 const targetSelectors = {
-    'toggleSignup': 'a[href="/i/twitter_blue_sign_up"][role="link"]', // Twitter Blue signup
-    'toggleVerif': 'a[href="/i/verified-choose"][role="link"]', // Verified Orgs signup
-    'toggleCheck': 'svg[data-testid="icon-verified"]', // Verified badge
+    'toggleVerif': 'a[href="/i/verified-choose"][role="link"]', 
+    'toggleCheck': 'svg[data-testid="icon-verified"]', 
 };
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
