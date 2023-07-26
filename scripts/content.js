@@ -1,63 +1,38 @@
-function hideSpecifiedElements(selector) {
+// Targets
+const targets = {
+    'toggleSignup': {
+        'selector': 'a[href="/i/verified-choose"][role="link"]',
+        'title': 'Hide Signup',
+        'description': 'Hide the signup button for Twitter verification',
+    },
+    'toggleCheck': {
+        'selector': 'svg[data-testid="icon-verified"]',
+        'title': 'Hide Checkmarks',
+        'description': 'Hide the checkmarks for verified Twitter accounts',
+    },
+};
+
+// Extract the selectors from the targets
+const targetSelectors = Object.values(targets).map(target => target.selector);
+
+function hideAllSpecifiedElements(selector) {
     const elements = document.querySelectorAll(selector);
-    console.log('hide', elements)
     for (const element of elements) {
         element.style.display = "none";
     }
 }
 
-function showSpecifiedElements(selector) {
-    const elements = document.querySelectorAll(selector);
-    console.log('show', elements)
-    for (const element of elements) {
-        element.style.display = "";
-    }
-}
-
-function applyToggleState(isEnabled, selectors) {
-    for(let key in selectors){
-        if (isEnabled[key]) {
-            hideSpecifiedElements(selectors[key]);
-        } else {
-            showSpecifiedElements(selectors[key]);
-        }
-    }
-}
-
-function observeDOMChanges(selectors) {
-    const observer = new MutationObserver((mutationsList, observer) => {
-        for (const mutation of mutationsList) {
-            if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
-                chrome.storage.sync.get(["isEnabled"], (result) => {
-                    if (result.isEnabled !== undefined) {
-                        applyToggleState(result.isEnabled, selectors);
-                    } else {
-                        let flagBySelector = {};
-                        for(const key in targetSelectors) flagBySelector[key] = true;
-                        applyToggleState(flagBySelector, selectors);
-                    }
-                });
-            }
-        }
+// Observe DOM changes and apply the hiding logic
+function observeDOMChanges() {
+    const observer = new MutationObserver(() => {
+        hideAllSpecifiedElements(targetSelectors);
     });
 
     observer.observe(document.body, { childList: true, subtree: true });
 }
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    applyToggleState(request.isEnabled, targetSelectors);
-});
-
-window.onload = () => observeDOMChanges(targetSelectors);
-
-
-chrome.storage.sync.get(["isEnabled"], (result) => {
-    if (result.isEnabled !== undefined) {
-        applyToggleState(result.isEnabled, targetSelectors);
-    } else {
-        let flagBySelector = {};
-        for(const key in targetSelectors) flagBySelector[key] = true;
-        applyToggleState(flagBySelector, targetSelectors);
-    }
-});
-
+// Apply hiding logic once the page loads
+window.onload = () => {
+    hideAllSpecifiedElements(targetSelectors);
+    observeDOMChanges();  // Start observing for DOM changes
+};

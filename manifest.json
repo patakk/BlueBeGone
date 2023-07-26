@@ -3,7 +3,11 @@
     "name": "BlueBeGone",
     "version": "1.0.0",
     "description": "Hides the useless \"Twitter Blue\" and \"Verified Organizations\" sidebar links.",
-    "permissions": ["tabs", "scripting", "storage"],
+    "permissions": [
+        "storage",
+        "activeTab",
+        "tabs"
+    ],
     "action": {
         "default_popup": "popup.html",
         "default_icon": {
@@ -19,11 +23,8 @@
     },
     "content_scripts": [
         {
-            "matches": [
-                "https://twitter.com/*"
-            ],
+            "matches": ["*://twitter.com/*", "*://x.com/*"],
             "js": [
-                "scripts/targets.js",
                 "scripts/content.js"
             ],
             "run_at": "document_end"
