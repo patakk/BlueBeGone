@@ -1,6 +1,26 @@
 // Extract the selectors from the targets
 const targetSelectors = Object.values(targets).map(target => target.selector);
 
+// Listen for messages from the popup
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === "toggleVisibility" && targets[request.targetKey]) {
+        if (request.isVisible) {
+            hideAllSpecifiedElements(targets[request.targetKey].selector);
+        } else {
+            // Assuming you have a function to show the elements, or you can modify the `hideAllSpecifiedElements` to make it toggle visibility.
+            showAllSpecifiedElements(targets[request.targetKey].selector);
+        }
+    }
+});
+
+function showAllSpecifiedElements(selector) {
+    const elements = document.querySelectorAll(selector);
+    for (const element of elements) {
+        element.style.display = "";
+    }
+}
+
+
 function hideAllSpecifiedElements(selector) {
     const elements = document.querySelectorAll(selector);
     for (const element of elements) {
