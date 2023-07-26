@@ -44,12 +44,6 @@ function observeDOMChanges(selectors) {
     observer.observe(document.body, { childList: true, subtree: true });
 }
 
-// the order of these keys must match the order of the keys in targetSelectors array from popup.js
-const targetSelectors = {
-    'toggleVerif': 'a[href="/i/verified-choose"][role="link"]', 
-    'toggleCheck': 'svg[data-testid="icon-verified"]', 
-};
-
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     applyToggleState(request.isEnabled, targetSelectors);
 });

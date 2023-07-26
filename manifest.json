@@ -23,6 +23,7 @@
                 "https://twitter.com/*"
             ],
             "js": [
+                "scripts/targets.js",
                 "scripts/content.js"
             ],
             "run_at": "document_end"
