@@ -1,59 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        body {
-            font-family: 'Consolas', Courier, monospace;
-            font-size: 16px;
-            text-align: center;
-            width: 300px;
-            color: #c8c8c8;
-            background-color: #222222;
-        }
-        #description {
-            padding-bottom: 10px;
-        }
-        .toggle {
-            display: inline-block;
-            width: 66px;
-            height: 30px;
-            line-height: 30px;
-            background-color: #6cb36c;
-            color: #ffffff;
-            text-align: center;
-            cursor: pointer;
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-        }
-        .row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 14px;
-            margin-right: 10px;
-            margin-left: 10px;
-        }
-    </style>
+    <title>BlueBeGone Settings</title>
+    <link rel="stylesheet" href="styles/popup.css">
+    <link rel="stylesheet" type="text/css" href="styles/toggle.css">
 </head>
 <body>
-    <div id="main">
-        <h2>BlueBeGone</h2>
-        <p id="description">Hides some of Twitter's annoyances.</p>
-        <div class="row">
-            <div>Blue Checks</div>
-            <div class="toggle" id="toggleCheck">hidden</div>
-        </div>
-        <div class="row">
-            <div>Twitter Blue Sign up</div>
-            <div class="toggle" id="toggleSignup">hidden</div>
-        </div>
-        <div class="row">
-            <div>Verif. Orgs bar</div>
-            <div class="toggle" id="toggleVerif">hidden</div>
-        </div>
-        <script src="scripts/popup.js"></script>
-    </div>
+    <h1>BlueBeGone</h1>
+    <div id="description">Hide some of Twitter's annoyances.</div>
+    <script src="scripts/targets.js"></script>
+    <script src="scripts/toggles.js"></script>
 </body>
 </html>

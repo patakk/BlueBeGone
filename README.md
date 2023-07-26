@@ -1,6 +1,6 @@
 
 # BlueBeGone
-Drastic times call for drastic measures. BlueBeGone Chrome extension gives you the option of removing the infamous blue checks, as well as the annoying "Twitter Blue" and "Verified Organizations" sidebar links.
+Drastic times call for drastic measures. BlueBeGone Chrome extension gives you the option of removing the infamous blue checks, as well as the annoying verified signup link.
 
 This project is a natural evolution of [DogeBeGone](https://github.com/SableRaf/dogeBeGone_extension), originally by [Raphaël](https://twitter.com/sableRaph). The main idea is the same, make twitter just a bit less annoying.
 

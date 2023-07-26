@@ -1,70 +1,71 @@
-function hideSpecifiedElements(selector) {
-    const elements = document.querySelectorAll(selector);
-    console.log('hide', elements)
-    for (const element of elements) {
-        element.style.display = "none";
-    }
-}
+// Extract the selectors from the targets
+const targetSelectors = Object.values(targets).map(target => target.selector);
 
-function showSpecifiedElements(selector) {
+// Listen for messages from the popup
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === "toggleVisibility" && targets[request.targetKey]) {
+        if (request.isVisible) {
+            hideAllSpecifiedElements(targets[request.targetKey].selector);
+        } else {
+            // Assuming you have a function to show the elements, or you can modify the `hideAllSpecifiedElements` to make it toggle visibility.
+            showAllSpecifiedElements(targets[request.targetKey].selector);
+        }
+    }
+});
+
+function showAllSpecifiedElements(selector) {
     const elements = document.querySelectorAll(selector);
-    console.log('show', elements)
     for (const element of elements) {
         element.style.display = "";
     }
 }
 
-function applyToggleState(isEnabled, selectors) {
-    for(let key in selectors){
-        if (isEnabled[key]) {
-            hideSpecifiedElements(selectors[key]);
-        } else {
-            showSpecifiedElements(selectors[key]);
-        }
+
+function hideAllSpecifiedElements(selector) {
+    const elements = document.querySelectorAll(selector);
+    for (const element of elements) {
+        element.style.display = "none";
     }
 }
 
-function observeDOMChanges(selectors) {
-    const observer = new MutationObserver((mutationsList, observer) => {
-        for (const mutation of mutationsList) {
-            if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
-                chrome.storage.sync.get(["isEnabled"], (result) => {
-                    if (result.isEnabled !== undefined) {
-                        applyToggleState(result.isEnabled, selectors);
-                    } else {
-                        let flagBySelector = {};
-                        for(const key in targetSelectors) flagBySelector[key] = true;
-                        applyToggleState(flagBySelector, selectors);
-                    }
-                });
+function storeVisibilityState(targetKey, isVisible) {
+    chrome.storage.sync.set({ [targetKey]: isVisible });
+}
+
+function applyStoredVisibility() {
+    chrome.storage.sync.get(null, (results) => {
+        for (let key in results) {
+            if (targets[key]) {
+                if (results[key]) {
+                    hideAllSpecifiedElements(targets[key].selector);
+                }
             }
         }
+    });
+}
+
+function initializeStorage() {
+    chrome.storage.sync.get(null, (results) => {
+        for (let key in targets) {
+            if (results[key] === undefined) {
+                storeVisibilityState(key, true);
+            }
+        }
+    });
+}
+
+// Observe DOM changes and apply the hiding logic
+function observeDOMChanges() {
+    const observer = new MutationObserver(() => {
+        applyStoredVisibility();
     });
 
     observer.observe(document.body, { childList: true, subtree: true });
 }
 
-// the order of these keys must match the order of the keys in targetSelectors array from popup.js
-const targetSelectors = {
-    'toggleSignup': 'a[href="/i/twitter_blue_sign_up"][role="link"]', // Twitter Blue signup
-    'toggleVerif': 'a[href="/i/verified-orgs-signup"][role="link"]', // Verified Orgs signup
-    'toggleCheck': 'svg[data-testid="icon-verified"]', // Verified badge
+// Initialize
+window.onload = () => {
+    initializeStorage();
+    applyStoredVisibility();
+    observeDOMChanges();
 };
-
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    applyToggleState(request.isEnabled, targetSelectors);
-});
-
-window.onload = () => observeDOMChanges(targetSelectors);
-
-
-chrome.storage.sync.get(["isEnabled"], (result) => {
-    if (result.isEnabled !== undefined) {
-        applyToggleState(result.isEnabled, targetSelectors);
-    } else {
-        let flagBySelector = {};
-        for(const key in targetSelectors) flagBySelector[key] = true;
-        applyToggleState(flagBySelector, targetSelectors);
-    }
-});
-
