@@ -20,23 +20,23 @@ function loadStatesAndCreateToggles() {
             const checkbox = document.createElement("input");
             checkbox.type = "checkbox";
             
-            // If we have a stored state for this target, set the checkbox state
+            // Adjusted logic: true (hidden) in storage means unchecked in UI
             if (results[key] !== undefined) {
-                checkbox.checked = !results[key]; // Since true means hidden and checked means show
+                checkbox.checked = results[key]; 
             } else {
-                checkbox.checked = true;
+                checkbox.checked = false;
             }
 
             // Update the state in storage and send message to content script whenever the checkbox is toggled
             checkbox.addEventListener("change", function() {
-                storeVisibilityState(key, !this.checked);
+                storeVisibilityState(key, this.checked);
 
                 // Send message to content script to immediately update visibility
                 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
                     chrome.tabs.sendMessage(tabs[0].id, {
                         action: "toggleVisibility",
                         targetKey: key,
-                        isVisible: !this.checked
+                        isVisible: this.checked
                     });
                 }.bind(this));
             });
