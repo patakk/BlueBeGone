@@ -22,17 +22,44 @@ function hideAllSpecifiedElements(selector) {
     }
 }
 
+function storeVisibilityState(targetKey, isVisible) {
+    chrome.storage.sync.set({ [targetKey]: isVisible });
+}
+
+function applyStoredVisibility() {
+    chrome.storage.sync.get(null, (results) => {
+        for (let key in results) {
+            if (targets[key]) {
+                if (results[key]) {
+                    hideAllSpecifiedElements(targets[key].selector);
+                }
+            }
+        }
+    });
+}
+
+function initializeStorage() {
+    chrome.storage.sync.get(null, (results) => {
+        for (let key in targets) {
+            if (results[key] === undefined) {
+                storeVisibilityState(key, true);
+            }
+        }
+    });
+}
+
 // Observe DOM changes and apply the hiding logic
 function observeDOMChanges() {
     const observer = new MutationObserver(() => {
-        hideAllSpecifiedElements(targetSelectors);
+        applyStoredVisibility();
     });
 
     observer.observe(document.body, { childList: true, subtree: true });
 }
 
-// Apply hiding logic once the page loads
+// Initialize
 window.onload = () => {
-    hideAllSpecifiedElements(targetSelectors);
-    observeDOMChanges();  // Start observing for DOM changes
+    initializeStorage();
+    applyStoredVisibility();
+    observeDOMChanges();
 };
