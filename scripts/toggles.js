@@ -30,24 +30,30 @@ function loadStatesAndCreateToggles(isAllowedDomain) {
             // Create the toggle for this target
             const div = document.createElement("div");
 
-            const label = document.createElement("label");
-            label.textContent = target.title;
+            const labelText = document.createElement("span");
+            labelText.textContent = target.title;
+
+            const switchLabel = document.createElement("label");
+            switchLabel.classList.add("switch");
 
             const checkbox = document.createElement("input");
             checkbox.type = "checkbox";
 
-            // If we have a stored state for this target, set the checkbox state
+            const slider = document.createElement("span");
+            slider.classList.add("slider", "round");
+
+            // If we have a stored state for this target, set the toggle state
             if (results[key] !== undefined) {
                 checkbox.checked = results[key]; // Since true means visible and checked means visible
             } else {
                 checkbox.checked = true;
             }
 
-            // Disable the checkbox if it's not an allowed domain
+            // Disable the toggle if it's not an allowed domain
             if (!isAllowedDomain) {
                 checkbox.disabled = true;
             } else {
-                // Update the state in storage and send message to content script whenever the checkbox is toggled
+                // Update the state in storage and send message to content script whenever the toggle is switched
                 checkbox.addEventListener("change", function() {
                     storeVisibilityState(key, this.checked);
 
@@ -62,12 +68,15 @@ function loadStatesAndCreateToggles(isAllowedDomain) {
                 });
             }
 
-            label.prepend(checkbox);
-            div.appendChild(label);
+            switchLabel.appendChild(checkbox);
+            switchLabel.appendChild(slider);
+            div.appendChild(labelText);
+            div.appendChild(switchLabel);
             container.appendChild(div);
         }
     });
 }
+
 
 function storeVisibilityState(targetKey, isVisible) {
     chrome.storage.sync.set({ [targetKey]: isVisible });
